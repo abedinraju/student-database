@@ -1,3 +1,6 @@
+<?php include_once  "app/autoload.php" ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +33,14 @@
           $shift = $_POST['shift'];
          echo $location = $_POST['location'];
       }
+      /*
+       * Form Validation
+       */
+    if (empty($name) || empty($email) || empty($cell) || empty($uname) || empty($age) || empty($gender) || empty($shift) ||
+    empty($location)){
 
+        $mess = "<p class='alert alert-danger'> All fields are required ! <button class='close' data-dismiss='alert'>&times;</button> </p>";
+    }
 
     ?>
 	
@@ -39,6 +49,11 @@
 		<div class="card">
 			<div class="card-body">
 				<h2>Add New Student</h2>
+               <?php
+                if (isset($mess)){
+                    echo $mess;
+                }
+               ?>
 				<form action="" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Name</label>
