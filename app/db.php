@@ -1,8 +1,7 @@
 <?php
 
-
 /*
- *  Database connection
+ * Database connection
  */
 
 $host ='localhost';
@@ -10,7 +9,7 @@ $user ='root';
 $pass ='';
 $db ='student';
 
-$connection = newmysqli($host,$user,$pass,$db);
+$connection = new mysqli ($host,$user,$pass,$db);
 
 
 
