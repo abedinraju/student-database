@@ -31,24 +31,43 @@
               $gender = $_POST['gender'];
           }
           $shift = $_POST['shift'];
-         echo $location = $_POST['location'];
+          $location = $_POST['location'];
       }
+
+      /*
+       * Image upload
+       */
+     $file_name = $_FILES['photo']['name'];
+     $file_tmp_name = $_FILES['photo']['tmp_name'];
+
+     $unique_file_name =md5( time().rand()). $file_name;
+
+
       /*
        * Form Validation
        */
     if (empty($name) || empty($email) || empty($cell) || empty($uname) || empty($age) || empty($gender) || empty($shift) ||
     empty($location)){
 
-        $mess = validationMsg('All fields are required ','danger');
+        $mess = validationMsg('All fields are required ');
     }elseif (filter_var($email, FILTER_VALIDATE_EMAIL)==false){
-        $mess = validationMsg('Invalid email address ','info');
+        $mess = validationMsg('Invalid email address ');
+    }elseif ($age <= 5 || $age>= 12){
+        $mess = validationMsg('Your age is not okay for our school ', 'warning');
+    }else{
+        $connection -> query("INSERT INTO students (name,email,cell,uname,age,gender,shift,location,photo)
+VALUES ('$name','$email','$cell','$uname','$age','$gender','$shift','$location','$unique_file_name')");
 
+        move_uploaded_file($file_tmp_name,'photo/students/' . $unique_file_name );
+
+        $mess = validationMsg('Data Stable ', 'success');
     }
 
     ?>
 	
 
 	<div class="wrap shadow">
+        <a class="btn btn-sm btn-primary" href="students.php">All Students</a>
 		<div class="card">
 			<div class="card-body">
 				<h2>Add New Student</h2>
